@@ -103,7 +103,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
       <footer className="p-6 text-center text-white/80 sm:p-12">
         Photography by{' '}
         <a
-          href="https://edelsonphotography.com/"
+          href="https://sankalpsharma.vercel.app/"
           target="_blank"
           className="font-semibold hover:text-white"
           rel="noreferrer"
