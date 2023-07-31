@@ -57,9 +57,9 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               </span>
               <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
             </div>
-            <Logo />
+            {/* <Logo /> */}
             <h1 className="mt-8 mb-4 text-base font-bold uppercase tracking-widest">
-              2023 Event Photos
+              SANKALP SHARMA
             </h1>
             <p className="max-w-[40ch] text-white/75 sm:max-w-[32ch]">
               My incredible life and the moments I have captured along the way.
@@ -82,7 +82,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               shallow
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
-              <Image
+              {/* <Image
                 alt="Next.js Conf photo"
                 className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
                 style={{ transform: 'translate3d(0, 0, 0)' }}
@@ -95,7 +95,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
                   (max-width: 1280px) 50vw,
                   (max-width: 1536px) 33vw,
                   25vw"
-              />
+              /> */}
             </Link>
           ))}
         </div>
