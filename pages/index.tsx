@@ -17,7 +17,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
   const { photoId } = router.query
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto()
 
-  const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null)
+  const lastViewedPhotoRegf = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
@@ -69,7 +69,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               href='blog-bfw3r5gbg-sankalpsharmaofficial.vercel.app'
               target="_blank"
               rel="noreferrer"
-            >
+            > 
               Go to Blog
             </a>
           </div>
@@ -152,4 +152,3 @@ export async function getStaticProps() {
     },
   }
 }
-
