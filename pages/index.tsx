@@ -77,7 +77,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               key={id}
               href={`/?photoId=${id}`}
               as={`/p/${id}`}
-              ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRef : null}
+              ref={id === Number(lastViewedPhoto) ? lastViewedPhotoRegf : null}
               shallow
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
