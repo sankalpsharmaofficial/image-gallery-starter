@@ -10,14 +10,14 @@ class MyDocument extends Document {
             name="description"
             content="See Sankalp Sharma photography."
           />
-          <meta property="og:site_name" content="nextjsconf-pics.vercel.app" />
+          <meta property="og:site_name" content="https://sankalpsharma-gallery.vercel.app/" />
           <meta
             property="og:description"
             content="See Sankalp Sharma photography."
           />
-          <meta property="og:title" content="Next.js Conf 2022 Pictures" />
+          <meta property="og:title" content="Sankalp Sharma Photography" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Next.js Conf 2022 Pictures" />
+          <meta name="twitter:title" content="Sankalp Sharma Photography" />
           <meta
             name="twitter:description"
             content="See Sankalp Sharma photography."
