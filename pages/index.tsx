@@ -104,7 +104,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
       <footer className="p-6 text-center text-white/80 sm:p-12">
       <Avatar>
   <AvatarImage src="https://github.com/sankalpsharmaofficial.png" />
-  <AvatarFallback>SS</AvatarFallback>
+  <AvatarFallback>CN</AvatarFallback>
 </Avatar>
 
         Photography by{' '}
