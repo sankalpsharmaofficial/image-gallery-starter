@@ -11,6 +11,8 @@ import cloudinary from '../utils/cloudinary'
 import getBase64ImageUrl from '../utils/generateBlurPlaceholder'
 import type { ImageProps } from '../utils/types'
 import { useLastViewedPhoto } from '../utils/useLastViewedPhoto'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 
 const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
   const router = useRouter()
@@ -100,6 +102,11 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
         </div>
       </main>
       <footer className="p-6 text-center text-white/80 sm:p-12">
+      <Avatar>
+  <AvatarImage src="https://github.com/sankalpsharmaofficial.png" />
+  <AvatarFallback>SS</AvatarFallback>
+</Avatar>
+
         Photography by{' '}
         <a
           href="https://sankalpsharma.vercel.app/"
