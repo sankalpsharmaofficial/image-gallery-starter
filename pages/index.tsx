@@ -11,7 +11,7 @@ import cloudinary from '../utils/cloudinary'
 import getBase64ImageUrl from '../utils/generateBlurPlaceholder'
 import type { ImageProps } from '../utils/types'
 import { useLastViewedPhoto } from '../utils/useLastViewedPhoto'
-import { Avatar, AvatarFallback, AvatarImage } from "../@/components/ui/avatar"
+// import { Avatar, AvatarFallback, AvatarImage } from "../@/components/ui/avatar"
 
 
 const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
@@ -109,10 +109,10 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
           className="font-semibold hover:text-white"
           rel="noreferrer"
         >
-          Sankalp Sharma <Avatar className='w-5 h-5 rounded-full'>
+          {/* Sankalp Sharma <Avatar className='w-5 h-5 rounded-full'>
           <AvatarImage src="https://github.com/sankalpsharmaofficial.png" />
           <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        </Avatar> */}
         </a>
         
       </footer>
