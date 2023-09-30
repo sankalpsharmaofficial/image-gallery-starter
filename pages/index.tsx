@@ -109,12 +109,12 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
           className="font-semibold hover:text-white"
           rel="noreferrer"
         >
-          {/* Sankalp Sharma <Avatar className='w-5 h-5 rounded-full'>
+          Sankalp Sharma {/*<Avatar className='w-5 h-5 rounded-full'>
           <AvatarImage src="https://github.com/sankalpsharmaofficial.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar> */}
         </a>
-        
+
       </footer>
     </>
   )
