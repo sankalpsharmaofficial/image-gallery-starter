@@ -31,7 +31,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
   return (
     <>
       <Head>
-        <title>Sankalp's Life 2023 Photos</title>
+        <title>Sankalp's Life 2024 Photos</title>
         <meta
           property="og:image"
           content="https://https://sankalpsharma-gallery.vercel.app/og-image.jpg"
