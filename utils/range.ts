@@ -1,11 +1,7 @@
-export const range = (start: number, end: number) => {
-  let output = []
+export const range = (start: number, end: number): number[] => {
   if (typeof end === 'undefined') {
     end = start
     start = 0
   }
-  for (let i = start; i < end; i += 1) {
-    output.push(i)
-  }
-  return output
+  return Array.from({ length: end - start }, (_, i) => start + i)
 }

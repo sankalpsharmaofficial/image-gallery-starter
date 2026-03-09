@@ -7,18 +7,21 @@ import cloudinary from '../../utils/cloudinary'
 import getBase64ImageUrl from '../../utils/generateBlurPlaceholder'
 import type { ImageProps } from '../../utils/types'
 
-const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
+const PhotoPage: NextPage = ({
+  currentPhoto,
+}: {
+  currentPhoto: ImageProps
+}) => {
   const router = useRouter()
   const { photoId } = router.query
-  let index = Number(photoId)
+  const index = Number(photoId)
 
   const currentPhotoUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_2560/${currentPhoto.public_id}.${currentPhoto.format}`
 
   return (
     <>
       <Head>
-        
-        <title>Sankalp Sharma Photography</title>
+        <title>Photo {index + 1} — Sankalp Sharma Photography</title>
         <meta property="og:image" content={currentPhotoUrl} />
         <meta name="twitter:image" content={currentPhotoUrl} />
       </Head>
@@ -29,32 +32,34 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
   )
 }
 
-export default Home
+export default PhotoPage
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const results = await getResults()
 
-  let reducedResults: ImageProps[] = []
-  let i = 0
-  for (let result of results.resources) {
-    reducedResults.push({
+  const reducedResults: ImageProps[] = results.resources.map(
+    (result: any, i: number) => ({
       id: i,
       height: result.height,
       width: result.width,
       public_id: result.public_id,
       format: result.format,
     })
-    i++
-  }
+  )
 
   const currentPhoto = reducedResults.find(
     (img) => img.id === Number(context.params.photoId)
   )
+
+  if (!currentPhoto) {
+    return { notFound: true }
+  }
+
   currentPhoto.blurDataUrl = await getBase64ImageUrl(currentPhoto)
 
   return {
     props: {
-      currentPhoto: currentPhoto,
+      currentPhoto,
     },
   }
 }
@@ -66,13 +71,12 @@ export async function getStaticPaths() {
     .max_results(400)
     .execute()
 
-  let fullPaths = []
-  for (let i = 0; i < results.resources.length; i++) {
-    fullPaths.push({ params: { photoId: i.toString() } })
-  }
+  const paths = results.resources.map((_: any, i: number) => ({
+    params: { photoId: i.toString() },
+  }))
 
   return {
-    paths: fullPaths,
+    paths,
     fallback: false,
   }
 }

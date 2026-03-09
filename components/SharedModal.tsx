@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
 import { variants } from '../utils/animationVariants'
 import downloadPhoto from '../utils/downloadPhoto'
@@ -26,8 +26,16 @@ export default function SharedModal({
   direction,
 }: SharedModalProps) {
   const [loaded, setLoaded] = useState(false)
+  const [showKbdHint, setShowKbdHint] = useState(true)
 
-  let filteredImages = images?.filter((img: ImageProps) =>
+  // Auto-hide keyboard hint after 4 seconds
+  useEffect(() => {
+    if (!navigation) return
+    const timer = setTimeout(() => setShowKbdHint(false), 4000)
+    return () => clearTimeout(timer)
+  }, [navigation])
+
+  const filteredImages = images?.filter((img: ImageProps) =>
     range(index - 15, index + 15).includes(img.id)
   )
 
@@ -45,7 +53,7 @@ export default function SharedModal({
     trackMouse: true,
   })
 
-  let currentImage = images ? images[index] : currentPhoto
+  const currentImage = images ? images[index] : currentPhoto
 
   return (
     <MotionConfig
@@ -72,15 +80,13 @@ export default function SharedModal({
                 className="absolute"
               >
                 <Image
-                  src={`https://res.cloudinary.com/${
-                    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-                  }/image/upload/c_scale,${navigation ? 'w_1280' : 'w_1920'}/${
-                    currentImage.public_id
-                  }.${currentImage.format}`}
+                  src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+                    }/image/upload/c_scale,${navigation ? 'w_1280' : 'w_1920'}/${currentImage.public_id
+                    }.${currentImage.format}`}
                   width={navigation ? 1280 : 1920}
                   height={navigation ? 853 : 1280}
                   priority
-                  alt="Next.js Conf image"
+                  alt={`Photo ${index + 1} by Sankalp Sharma`}
                   onLoadingComplete={() => setLoaded(true)}
                 />
               </motion.div>
@@ -128,10 +134,10 @@ export default function SharedModal({
                   </a>
                 ) : (
                   <a
-                    href={`https://twitter.com/intent/tweet?text=Check%20out%20this%20pic%20from%20Next.js%20Conf!%0A%0Ahttps://nextjsconf-pics.vercel.app/p/${index}`}
+                    href={`https://twitter.com/intent/tweet?text=Check%20out%20this%20photo%20by%20Sankalp%20Sharma!%0A%0Ahttps://sankalpsharma-gallery.vercel.app/p/${index}`}
                     className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                     target="_blank"
-                    title="Open fullsize version"
+                    title="Share on Twitter"
                     rel="noreferrer"
                   >
                     <Twitter className="h-5 w-5" />
@@ -162,6 +168,29 @@ export default function SharedModal({
                   )}
                 </button>
               </div>
+
+              {/* Photo Counter */}
+              {navigation && images && (
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+                  <span className="photo-counter rounded-full px-3 py-1.5 text-xs font-medium text-white/80">
+                    {index + 1} / {images.length}
+                  </span>
+                  {/* Keyboard shortcut hint */}
+                  {showKbdHint && (
+                    <div className="kbd-hint flex items-center gap-3 rounded-full px-4 py-2 text-[11px] text-white/50">
+                      <span className="flex items-center gap-1">
+                        <span className="kbd">←</span>
+                        <span className="kbd">→</span>
+                        <span className="ml-0.5">navigate</span>
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <span className="kbd">Esc</span>
+                        <span className="ml-0.5">close</span>
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
           {/* Bottom Nav bar */}
@@ -186,23 +215,20 @@ export default function SharedModal({
                       exit={{ width: '0%' }}
                       onClick={() => changePhotoId(id)}
                       key={id}
-                      className={`${
-                        id === index
-                          ? 'z-20 rounded-md shadow shadow-black/50'
-                          : 'z-10'
-                      } ${id === 0 ? 'rounded-l-md' : ''} ${
-                        id === images.length - 1 ? 'rounded-r-md' : ''
-                      } relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
+                      className={`${id === index
+                        ? 'z-20 rounded-md shadow shadow-black/50'
+                        : 'z-10'
+                        } ${id === 0 ? 'rounded-l-md' : ''} ${id === images.length - 1 ? 'rounded-r-md' : ''
+                        } relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
                     >
                       <Image
-                        alt="small photos on the bottom"
+                        alt={`Thumbnail ${id + 1}`}
                         width={180}
                         height={120}
-                        className={`${
-                          id === index
-                            ? 'brightness-110 hover:brightness-110'
-                            : 'brightness-50 contrast-125 hover:brightness-75'
-                        } h-full transform object-cover transition`}
+                        className={`${id === index
+                          ? 'brightness-110 hover:brightness-110'
+                          : 'brightness-50 contrast-125 hover:brightness-75'
+                          } h-full transform object-cover transition`}
                         src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/c_scale,w_180/${public_id}.${format}`}
                       />
                     </motion.button>
