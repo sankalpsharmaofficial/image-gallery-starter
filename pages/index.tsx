@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Bridge from '../components/Icons/Bridge'
 import Modal from '../components/Modal'
 import getResults from '../utils/cachedImages'
@@ -11,11 +11,29 @@ import getBase64ImageUrl from '../utils/generateBlurPlaceholder'
 import type { ImageProps } from '../utils/types'
 import { useLastViewedPhoto } from '../utils/useLastViewedPhoto'
 
+// Fisher-Yates shuffle
+function shuffle<T>(array: T[]): T[] {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
   const router = useRouter()
   const { photoId } = router.query
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto()
   const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null)
+
+  // Shuffle images on mount so the grid is different every page load
+  const [hasMounted, setHasMounted] = useState(false)
+  useEffect(() => setHasMounted(true), [])
+  const shuffledImages = useMemo(
+    () => (hasMounted ? shuffle(images) : images),
+    [hasMounted, images]
+  )
 
   // Back to top visibility
   const [showBackToTop, setShowBackToTop] = useState(false)
@@ -171,7 +189,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
           </div>
 
           {/* ===== Gallery Grid ===== */}
-          {images.map(({ id, public_id, format, blurDataUrl }) => (
+          {shuffledImages.map(({ id, public_id, format, blurDataUrl }) => (
             <Link
               key={id}
               href={`/?photoId=${id}`}
